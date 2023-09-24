@@ -84,14 +84,20 @@ const MadLibForm = () => {
         </Alert>
       )}
       <Form>
-        {["noun", "verb", "adjective", "adverb"].map((type) => (
-          <Row className="gy-3" key={type}>
-            <Col md={12}>
-              <h4>{type.charAt(0).toUpperCase() + type.slice(1)}s</h4>
-            </Col>
-            {placeholders
-              .filter((placeholder) => placeholder.startsWith(type))
-              .map((placeholder, index) => (
+        {["noun", "verb", "adjective", "adverb"].map((type) => {
+          const placeholdersOfType = placeholders.filter((placeholder) =>
+            placeholder.startsWith(type)
+          );
+
+          // Check if there are placeholders of the current type
+          if (placeholdersOfType.length === 0) return null; // Skip rendering this group
+
+          return (
+            <Row className="gy-3" key={type}>
+              <Col md={12}>
+                <h4>{type.charAt(0).toUpperCase() + type.slice(1)}s</h4>
+              </Col>
+              {placeholdersOfType.map((placeholder, index) => (
                 <InputField
                   key={index}
                   name={placeholder}
@@ -101,8 +107,9 @@ const MadLibForm = () => {
                   onBlur={() => setFocusedInput(null)}
                 />
               ))}
-          </Row>
-        ))}
+            </Row>
+          );
+        })}
       </Form>
       <Row className="gy-3">
         <Col md>
