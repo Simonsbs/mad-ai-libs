@@ -27,7 +27,7 @@ const StoryDisplay = ({ story, inputs, focusedInput }) => {
             fontWeight: "bold",
           }}
         >
-          {inputs[key] ? inputs[key] : ""}
+          {inputs[key] ? inputs[key] : <>&nbsp;</>}
         </div>
         <div
           style={{
