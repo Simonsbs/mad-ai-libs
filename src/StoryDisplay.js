@@ -46,9 +46,17 @@ const StoryDisplay = ({ story, inputs, focusedInput }) => {
   };
 
   const getPlaceholderStyle = (key) => {
+    const wordType = key.match(/[a-zA-Z]+/)[0];
+    const colors = {
+      noun: "lightblue",
+      verb: "lightgreen",
+      adjective: "lightcoral",
+      adverb: "lightgoldenrodyellow",
+    };
+
     if (key === focusedInput) {
       return {
-        backgroundColor: "lightgreen",
+        backgroundColor: colors[wordType],
         borderRadius: "4px",
       };
     }

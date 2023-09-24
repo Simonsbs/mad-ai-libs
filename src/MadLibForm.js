@@ -84,18 +84,25 @@ const MadLibForm = () => {
         </Alert>
       )}
       <Form>
-        <Row className="gy-3">
-          {placeholders.map((placeholder, index) => (
-            <InputField
-              key={index}
-              name={placeholder}
-              value={inputs[placeholder] || ""}
-              onChange={handleChange}
-              onFocus={() => setFocusedInput(placeholder)}
-              onBlur={() => setFocusedInput(null)}
-            />
-          ))}
-        </Row>
+        {["noun", "verb", "adjective", "adverb"].map((type) => (
+          <Row className="gy-3" key={type}>
+            <Col md={12}>
+              <h4>{type.charAt(0).toUpperCase() + type.slice(1)}s</h4>
+            </Col>
+            {placeholders
+              .filter((placeholder) => placeholder.startsWith(type))
+              .map((placeholder, index) => (
+                <InputField
+                  key={index}
+                  name={placeholder}
+                  value={inputs[placeholder] || ""}
+                  onChange={handleChange}
+                  onFocus={() => setFocusedInput(placeholder)}
+                  onBlur={() => setFocusedInput(null)}
+                />
+              ))}
+          </Row>
+        ))}
       </Form>
       <Row className="gy-3">
         <Col md>
