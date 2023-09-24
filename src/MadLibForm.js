@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Row, Col, Container, Form } from "react-bootstrap";
 import { XCircleFill, Shuffle, LightningFill } from "react-bootstrap-icons";
 import InputField from "./InputField";
@@ -7,13 +7,45 @@ import { generateRandomWords, generateStory } from "./utils/api";
 import { Spinner } from "react-bootstrap";
 
 const MadLibForm = () => {
-  const [inputs, setInputs] = useState({});
-  const [story, setStory] = useState(null);
+  const [inputs, setInputs] = useState(() => {
+    const savedInputs = localStorage.getItem("madlibsInputs");
+    return savedInputs ? JSON.parse(savedInputs) : {};
+  });
+  const [story, setStory] = useState(() => {
+    const savedStory = localStorage.getItem("madlibsStory");
+    return savedStory || "";
+  });
   const [loadingStory, setLoadingStory] = useState(false);
   const [loadingWords, setLoadingWords] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);
 
   const placeholders = ["noun", "verb", "adjective", "adverb"];
+
+  const instructions = (
+    <div className="mt-4">
+      <h3>How to Play Mad Libs:</h3>
+      <ol>
+        <li>
+          Fill in the word fields with appropriate nouns, verbs, adjectives, and
+          adverbs.
+        </li>
+        <li>
+          Click "Generate Story" to see the fun story created with your words!
+        </li>
+        <li>
+          Not sure what words to use? Click "Fill Randomly" for a surprise.
+        </li>
+      </ol>
+    </div>
+  );
+
+  useEffect(() => {
+    localStorage.setItem("madlibsInputs", JSON.stringify(inputs));
+  }, [inputs]);
+
+  useEffect(() => {
+    localStorage.setItem("madlibsStory", story);
+  }, [story]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +56,7 @@ const MadLibForm = () => {
     const clearedInputs = {};
     placeholders.forEach((item) => (clearedInputs[item] = ""));
     setInputs(clearedInputs);
+    setStory("");
   };
 
   const handleGenerateStory = async (e) => {
@@ -132,12 +165,14 @@ const MadLibForm = () => {
         </Col>
       </Row>
 
-      {story && (
+      {story ? (
         <StoryDisplay
           story={story}
           inputs={inputs}
           focusedInput={focusedInput}
         />
+      ) : (
+        instructions
       )}
     </Container>
   );
