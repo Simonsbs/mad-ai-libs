@@ -89,8 +89,7 @@ const MadLibForm = () => {
             placeholder.startsWith(type)
           );
 
-          // Check if there are placeholders of the current type
-          if (placeholdersOfType.length === 0) return null; // Skip rendering this group
+          if (placeholdersOfType.length === 0) return null;
 
           return (
             <Row className="gy-3" key={type}>
