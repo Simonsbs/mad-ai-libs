@@ -11,6 +11,7 @@ const MadLibForm = () => {
   const [story, setStory] = useState(null);
   const [loadingStory, setLoadingStory] = useState(false);
   const [loadingWords, setLoadingWords] = useState(false);
+  const [focusedInput, setFocusedInput] = useState(null);
 
   const placeholders = ["noun", "verb", "adjective", "adverb"];
 
@@ -60,6 +61,8 @@ const MadLibForm = () => {
               name={placeholder}
               value={inputs[placeholder] || ""}
               onChange={handleChange}
+              onFocus={() => setFocusedInput(placeholder)}
+              onBlur={() => setFocusedInput(null)}
             />
           ))}
         </Row>
@@ -129,7 +132,13 @@ const MadLibForm = () => {
         </Col>
       </Row>
 
-      {story && <StoryDisplay story={story} inputs={inputs} />}
+      {story && (
+        <StoryDisplay
+          story={story}
+          inputs={inputs}
+          focusedInput={focusedInput}
+        />
+      )}
     </Container>
   );
 };

@@ -1,13 +1,15 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-const StoryDisplay = ({ story, inputs }) => {
+const StoryDisplay = ({ story, inputs, focusedInput }) => {
   const replacePlaceholderWithInput = (placeholder) => {
     const key = placeholder.slice(1, -1);
+    const styles = getPlaceholderStyle(key);
 
     return (
       <span
         style={{
+          ...styles,
           display: "inline-block",
           position: "relative",
           bottom: "-0.1em",
@@ -41,6 +43,16 @@ const StoryDisplay = ({ story, inputs }) => {
         </div>
       </span>
     );
+  };
+
+  const getPlaceholderStyle = (key) => {
+    if (key === focusedInput) {
+      return {
+        backgroundColor: "lightgreen",
+        borderRadius: "4px",
+      };
+    }
+    return {};
   };
 
   const parseStory = () => {
