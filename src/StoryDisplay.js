@@ -53,7 +53,7 @@ const StoryDisplay = ({ story, inputs, focusedInput }) => {
       noun: "lightblue",
       verb: "lightgreen",
       adjective: "lightcoral",
-      adverb: "lightgoldenrodyellow",
+      adverb: "yellow",
     };
 
     if (key === focusedInput) {

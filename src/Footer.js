@@ -17,7 +17,7 @@ const Footer = () => {
       <Container>
         <Row className="mb-4">
           <Col md={6}>
-            <h5 style={{ fontWeight: "bold" }}>AI-Libs Fun</h5>
+            <h5 style={{ fontWeight: "bold" }}>Mad-AI-Libs Fun</h5>
             <p>
               Craft spontaneous stories with the power of AI. Let your
               creativity take the front seat and enjoy the AI-driven narratives.
@@ -50,7 +50,7 @@ const Footer = () => {
         <Row>
           <Col className="text-center">
             <small style={{ color: "#999" }}>
-              &copy; {currentYear} AI-Libs Fun. All rights reserved.
+              &copy; {currentYear} Mad-AI-Libs Fun. All rights reserved.
             </small>
           </Col>
         </Row>

@@ -1,8 +1,8 @@
-# AI-Libs Fun: Powered by Artificial Intelligence
+# Mad-AI-Libs Fun: Powered by Artificial Intelligence
 
 Create fun stories by filling in the blanks. Our application uses state-of-the-art AI to generate compelling, humorous, and often unpredictable stories!
 
-![Screenshot of AI-Libs Fun](path_to_a_screenshot_of_your_app.png)
+![Screenshot of Mad-AI-Libs Fun](path_to_a_screenshot_of_your_app.png)
 
 ## Getting Started
 

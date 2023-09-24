@@ -10,10 +10,10 @@ import {
 const AppHeader = () => {
   return (
     <Container className="text-center mb-4">
-      <h1>AI-Libs Fun</h1>
+      <h1>Mad-AI-Libs Fun</h1>
       <p>
-        Welcome to <strong>AI-Libs Fun</strong>, a modern twist on the classic
-        MadLibs game.
+        Welcome to <strong>Mad-AI-Libs Fun</strong>, a modern twist on the
+        classic MadLibs game.
       </p>
 
       <Row className="mt-3">

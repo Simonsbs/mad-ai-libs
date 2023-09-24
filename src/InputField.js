@@ -9,7 +9,15 @@ const InputField = ({ name, onChange, value, onFocus, onBlur }) => {
     noun: "lightblue",
     verb: "lightgreen",
     adjective: "lightcoral",
-    adverb: "lightgoldenrodyellow",
+    adverb: "yellow",
+  };
+
+  const handleInputChange = (event) => {
+    const { value } = event.target;
+
+    if (/^[a-zA-Z]*$/.test(value)) {
+      onChange(event);
+    }
   };
 
   return (
@@ -19,9 +27,10 @@ const InputField = ({ name, onChange, value, onFocus, onBlur }) => {
       </Form.Label>
       <Form.Control
         type="text"
+        maxLength="20"
         placeholder={`Enter a ${wordType}`}
         name={name}
-        onChange={onChange}
+        onChange={handleInputChange}
         value={value}
         onFocus={onFocus}
         onBlur={onBlur}
