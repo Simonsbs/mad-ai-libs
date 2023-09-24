@@ -1,19 +1,19 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import MadLibForm from "./MadLibForm";
+import Footer from "./Footer";
+import AppHeader from "./AppHeader";
 
 function App() {
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 mb-5">
       <Row>
         <Col md={{ span: 8, offset: 2 }}>
-          <h1 className="text-center">Mad Libs Game</h1>
-          <p className="text-center">
-            Fill in the blanks with appropriate words and generate a fun story!
-          </p>
+          <AppHeader />
           <MadLibForm />
         </Col>
       </Row>
+      <Footer />
     </Container>
   );
 }

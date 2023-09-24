@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Row,
-  Col,
-  Container,
-  Form,
-  Alert,
-  Card,
-} from "react-bootstrap";
+import { Button, Row, Container, Alert, Card } from "react-bootstrap";
 import { XCircleFill, Shuffle, LightningFill } from "react-bootstrap-icons";
 import InputField from "./InputField";
 import StoryDisplay from "./StoryDisplay";
@@ -24,7 +16,10 @@ const MadLibForm = () => {
     const savedInputs = localStorage.getItem("madlibsInputs");
     return savedInputs ? JSON.parse(savedInputs) : {};
   });
-
+  const [storyLength, setStoryLength] = useState(() => {
+    const savedValue = localStorage.getItem("madlibsStoryLength");
+    return savedValue ? Number(savedValue) : 10;
+  });
   const [loadingStory, setLoadingStory] = useState(false);
   const [loadingWords, setLoadingWords] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);
@@ -46,12 +41,13 @@ const MadLibForm = () => {
   const handleClear = () => {
     setInputs({});
     setStory("once apon a [noun1]...");
+    setStoryLength(10);
   };
 
   const handleGenerateStory = async () => {
     setLoadingStory(true);
     try {
-      const generatedStory = await generateStory();
+      const generatedStory = await generateStory(storyLength);
       setStory(generatedStory);
       setApiError(null);
     } catch (error) {
@@ -77,7 +73,8 @@ const MadLibForm = () => {
   useEffect(() => {
     localStorage.setItem("madlibsInputs", JSON.stringify(inputs));
     localStorage.setItem("madlibsStory", story);
-  }, [inputs, story]);
+    localStorage.setItem("madlibsStoryLength", storyLength);
+  }, [inputs, story, storyLength]);
 
   return (
     <Container className="mt-4">
@@ -124,7 +121,19 @@ const MadLibForm = () => {
         );
       })}
 
-      {/* Action Buttons */}
+      <div className="mb-4 d-flex align-items-center">
+        <label className="me-2">Story Length: {storyLength} words</label>
+        <input
+          type="range"
+          min="10"
+          max="150"
+          value={storyLength}
+          onChange={(e) => {
+            setStoryLength(e.target.value);
+          }}
+          style={{ flex: 1 }}
+        />
+      </div>
       <div className="d-flex justify-content-center gy-3">
         <Button
           variant="primary"

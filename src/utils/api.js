@@ -10,7 +10,7 @@ const openaiAPI = axios.create({
   },
 });
 
-export const generateStory = async () => {
+export const generateStory = async (storyLength) => {
   let prompts = [
     {
       role: "system",
@@ -19,7 +19,7 @@ export const generateStory = async () => {
     },
     {
       role: "user",
-      content: "Generate a 100 word mad-lib story",
+      content: `Generate a ${storyLength} word mad-lib story`,
     },
   ];
   const response = await openaiAPI.post("", {
