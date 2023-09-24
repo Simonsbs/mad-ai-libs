@@ -4,10 +4,13 @@ import { XCircleFill, Shuffle, LightningFill } from "react-bootstrap-icons";
 import InputField from "./InputField";
 import StoryDisplay from "./StoryDisplay";
 import { generateRandomWords, generateStory } from "./utils/api";
+import { Spinner } from "react-bootstrap";
 
 const MadLibForm = () => {
   const [inputs, setInputs] = useState({});
   const [story, setStory] = useState(null);
+  const [loadingStory, setLoadingStory] = useState(false);
+  const [loadingWords, setLoadingWords] = useState(false);
 
   const placeholders = ["noun", "verb", "adjective", "adverb"];
 
@@ -24,17 +27,27 @@ const MadLibForm = () => {
 
   const handleGenerateStory = async (e) => {
     e.preventDefault();
-    const generatedStory = await generateStory(prompt);
-    setStory(generatedStory);
+    setLoadingStory(true);
+    try {
+      const generatedStory = await generateStory();
+      setStory(generatedStory);
+    } finally {
+      setLoadingStory(false);
+    }
   };
 
   const handleRandomFill = async () => {
-    const results = await generateRandomWords();
-    const randomInputs = {};
-    for (let i = 0; i < placeholders.length; i++) {
-      randomInputs[placeholders[i]] = results[i];
+    setLoadingWords(true);
+    try {
+      const results = await generateRandomWords();
+      const randomInputs = {};
+      for (let i = 0; i < placeholders.length; i++) {
+        randomInputs[placeholders[i]] = results[i];
+      }
+      setInputs(randomInputs);
+    } finally {
+      setLoadingWords(false); // End loading
     }
-    setInputs(randomInputs);
   };
 
   return (
@@ -57,9 +70,25 @@ const MadLibForm = () => {
             variant="primary"
             onClick={handleGenerateStory}
             style={{ width: "100%" }}
+            disabled={loadingStory}
           >
-            <LightningFill className="me-2" />
-            Generate Story
+            {loadingStory ? (
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                <span className="ms-2">Generating...</span>
+              </>
+            ) : (
+              <>
+                <LightningFill className="me-2" />
+                Generate Story
+              </>
+            )}
           </Button>
         </Col>
         <Col md>
@@ -67,9 +96,25 @@ const MadLibForm = () => {
             variant="secondary"
             onClick={handleRandomFill}
             style={{ width: "100%" }}
+            disabled={loadingWords}
           >
-            <Shuffle className="me-2" />
-            Fill Randomly
+            {loadingWords ? (
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                <span className="ms-2">Fetching Words...</span>
+              </>
+            ) : (
+              <>
+                <Shuffle className="me-2" />
+                Fill Randomly
+              </>
+            )}
           </Button>
         </Col>
         <Col md>
