@@ -41,7 +41,7 @@ const MadLibForm = () => {
   const handleClear = () => {
     setInputs({});
     setStory("once apon a [noun1]...");
-    setStoryLength(10);
+    setStoryLength(80);
   };
 
   const handleGenerateStory = async () => {
