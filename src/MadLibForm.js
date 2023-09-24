@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, Row, Col, Container, Form, Alert } from "react-bootstrap";
+import {
+  Button,
+  Row,
+  Col,
+  Container,
+  Form,
+  Alert,
+  Card,
+} from "react-bootstrap";
 import { XCircleFill, Shuffle, LightningFill } from "react-bootstrap-icons";
 import InputField from "./InputField";
 import StoryDisplay from "./StoryDisplay";
@@ -72,108 +80,109 @@ const MadLibForm = () => {
   }, [inputs, story]);
 
   return (
-    <Container>
+    <Container className="mt-4">
+      {/* Display API errors */}
       {apiError && (
         <Alert
           variant="danger"
-          className="mt-3"
+          className="mb-3"
           onClose={() => setApiError(null)}
           dismissible
         >
           {apiError}
         </Alert>
       )}
-      <Form>
-        {["noun", "verb", "adjective", "adverb"].map((type) => {
-          const placeholdersOfType = placeholders.filter((placeholder) =>
-            placeholder.startsWith(type)
-          );
 
-          if (placeholdersOfType.length === 0) return null;
+      {/* Input Groups */}
+      {["noun", "verb", "adjective", "adverb"].map((type) => {
+        const placeholdersOfType = placeholders.filter((placeholder) =>
+          placeholder.startsWith(type)
+        );
 
-          return (
-            <Row className="gy-3" key={type}>
-              <Col md={12}>
-                <h4>{type.charAt(0).toUpperCase() + type.slice(1)}s</h4>
-              </Col>
-              {placeholdersOfType.map((placeholder, index) => (
-                <InputField
-                  key={index}
-                  name={placeholder}
-                  value={inputs[placeholder] || ""}
-                  onChange={handleChange}
-                  onFocus={() => setFocusedInput(placeholder)}
-                  onBlur={() => setFocusedInput(null)}
-                />
-              ))}
-            </Row>
-          );
-        })}
-      </Form>
-      <Row className="gy-3">
-        <Col md>
-          <Button
-            variant="primary"
-            onClick={handleGenerateStory}
-            style={{ width: "100%" }}
-            disabled={loadingStory}
-          >
-            {loadingStory ? (
-              <>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-                <span className="ms-2">Generating...</span>
-              </>
-            ) : (
-              <>
-                <LightningFill className="me-2" />
-                Generate Story
-              </>
-            )}
-          </Button>
-        </Col>
-        <Col md>
-          <Button
-            variant="secondary"
-            onClick={handleRandomFill}
-            style={{ width: "100%" }}
-            disabled={loadingWords}
-          >
-            {loadingWords ? (
-              <>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-                <span className="ms-2">Fetching Words...</span>
-              </>
-            ) : (
-              <>
-                <Shuffle className="me-2" />
-                Fill Randomly
-              </>
-            )}
-          </Button>
-        </Col>
-        <Col md>
-          <Button
-            variant="danger"
-            onClick={handleClear}
-            style={{ width: "100%" }}
-          >
-            <XCircleFill className="me-2" />
-            Reset Everything
-          </Button>
-        </Col>
-      </Row>
+        if (placeholdersOfType.length === 0) return null;
+
+        return (
+          <Card className="mb-4 shadow-sm" key={type}>
+            <Card.Header>
+              <h5>{type.charAt(0).toUpperCase() + type.slice(1)}s</h5>
+            </Card.Header>
+            <Card.Body>
+              <Row className="gy-3">
+                {placeholdersOfType.map((placeholder, index) => (
+                  <InputField
+                    key={index}
+                    name={placeholder}
+                    value={inputs[placeholder] || ""}
+                    onChange={handleChange}
+                    onFocus={() => setFocusedInput(placeholder)}
+                    onBlur={() => setFocusedInput(null)}
+                  />
+                ))}
+              </Row>
+            </Card.Body>
+          </Card>
+        );
+      })}
+
+      {/* Action Buttons */}
+      <div className="d-flex justify-content-center gy-3">
+        <Button
+          variant="primary"
+          className="me-2"
+          onClick={handleGenerateStory}
+          disabled={loadingStory}
+        >
+          {loadingStory ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="ms-2">Generating...</span>
+            </>
+          ) : (
+            <>
+              <LightningFill className="me-2" />
+              Generate Story
+            </>
+          )}
+        </Button>
+
+        <Button
+          variant="secondary"
+          className="me-2"
+          onClick={handleRandomFill}
+          disabled={loadingWords}
+        >
+          {loadingWords ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="ms-2">Fetching Words...</span>
+            </>
+          ) : (
+            <>
+              <Shuffle className="me-2" />
+              Fill Randomly
+            </>
+          )}
+        </Button>
+
+        <Button variant="danger" onClick={handleClear}>
+          <XCircleFill className="me-2" />
+          Reset Everything
+        </Button>
+      </div>
+
+      {/* Display the story */}
       <StoryDisplay story={story} inputs={inputs} focusedInput={focusedInput} />
     </Container>
   );
