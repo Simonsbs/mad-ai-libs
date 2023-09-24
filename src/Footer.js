@@ -1,11 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import {
-  Envelope,
-  Telephone,
-  HouseDoor,
-  QuestionCircle,
-} from "react-bootstrap-icons";
+import { Envelope, HouseDoor } from "react-bootstrap-icons";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -48,7 +43,8 @@ const Footer = () => {
               Contact Me
             </h6>
             <p style={{ fontSize: "0.9em" }}>
-              <strong>Email:</strong> simon@bestdev.co.il
+              <strong>Email:</strong>{" "}
+              <a href="mailto:simon@bestdev.co.il">simon@bestdev.co.il</a>
             </p>
           </Col>
         </Row>
