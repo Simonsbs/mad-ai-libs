@@ -15,11 +15,11 @@ export const generateStory = async () => {
     {
       role: "system",
       content:
-        "This prompt is for use in a mad-lib game, the response should be a short story with the nouns, verbs, adjectives and adverds missing and replaced with placeholders that will be filled in later, only use the following place holders: [noun], [verb], [adjective], [adverb]",
+        "This prompt is for use in a mad-lib game, the response should be a short story with the nouns, verbs, adjectives and adverds missing and replaced with placeholders that will be filled in later, only use the following place holders: [noun#], [verb#], [adjective#], [adverb#] where # represents the unique id of the placeholder",
     },
     {
       role: "user",
-      content: "Generate a 80 word story",
+      content: "Generate a 100 word mad-lib story",
     },
   ];
   const response = await openaiAPI.post("", {
@@ -32,29 +32,43 @@ export const generateStory = async () => {
 
 let lastResponseToRandomWords = "";
 
-export const generateRandomWords = async () => {
-  let prompts = [
-    {
-      role: "system",
-      content:
-        "This prompt is for use in a mad-lib game, reponse with only the required format, no extra detail or response needed. make sure to replace each word in the format with a sutable random single word, do not return the values as passed, no numbers or punctuation, return a single response",
-    },
-    {
-      role: "user",
-      content:
-        "generate 4 random single words in the following format: noun|verb|adjective|adverb",
-    },
-  ];
-  if (lastResponseToRandomWords) {
-    prompts[1].content +=
-      ", make sure the response is different from: " +
-      lastResponseToRandomWords;
+export const generateRandomWords = async (placeholders) => {
+  try {
+    const format = placeholders.join("|");
+
+    let prompts = [
+      {
+        role: "system",
+        content:
+          "This prompt is for use in a mad-lib game. Respond with only the required format, no extra detail or response needed. Make sure to replace each word in the format with a suitable random single word. Do not return the values as passed, no numbers or punctuation, return a single response.",
+      },
+      {
+        role: "user",
+        content: `generate random single words in the following format: ${format}`,
+      },
+    ];
+
+    if (lastResponseToRandomWords) {
+      prompts[1].content += `, make sure the response is different from: ${lastResponseToRandomWords}`;
+    }
+
+    const response = await openaiAPI.post("", {
+      model: "gpt-3.5-turbo",
+      messages: prompts,
+      max_tokens: 50,
+    });
+
+    lastResponseToRandomWords = response.data.choices[0].message.content;
+    const words = lastResponseToRandomWords.split("|");
+    const result = {};
+
+    for (let i = 0; i < placeholders.length; i++) {
+      result[placeholders[i]] = words[i];
+    }
+
+    return result;
+  } catch (error) {
+    console.error(`Error generating random words:`, error);
+    return {};
   }
-  const response = await openaiAPI.post("", {
-    model: "gpt-3.5-turbo",
-    messages: prompts,
-    max_tokens: 20,
-  });
-  lastResponseToRandomWords = response.data.choices[0].message.content;
-  return lastResponseToRandomWords.split("|");
 };

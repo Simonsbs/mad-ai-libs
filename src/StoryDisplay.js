@@ -56,11 +56,10 @@ const StoryDisplay = ({ story, inputs, focusedInput }) => {
   };
 
   const parseStory = () => {
-    return story.split(/(\[[a-z]+\])/).map((part, index) => {
+    return story.split(/(\[[a-z]+\d+\])/).map((part, index) => {
       if (part.startsWith("[") && part.endsWith("]")) {
         return <span key={index}>{replacePlaceholderWithInput(part)}</span>;
       }
-
       return part;
     });
   };

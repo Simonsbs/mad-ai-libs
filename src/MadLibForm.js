@@ -7,46 +7,28 @@ import { generateRandomWords, generateStory } from "./utils/api";
 import { Spinner } from "react-bootstrap";
 
 const MadLibForm = () => {
+  const [story, setStory] = useState(() => {
+    const savedStory = localStorage.getItem("madlibsStory");
+    return savedStory || "once apon a [noun1]...";
+  });
+
   const [inputs, setInputs] = useState(() => {
     const savedInputs = localStorage.getItem("madlibsInputs");
     return savedInputs ? JSON.parse(savedInputs) : {};
   });
-  const [story, setStory] = useState(() => {
-    const savedStory = localStorage.getItem("madlibsStory");
-    return savedStory || "";
-  });
+
   const [loadingStory, setLoadingStory] = useState(false);
   const [loadingWords, setLoadingWords] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);
   const [apiError, setApiError] = useState(null);
 
-  const placeholders = ["noun", "verb", "adjective", "adverb"];
+  function extractPlaceholders(story) {
+    const matchedPlaceholders = story.match(/\[[a-z]+\d+\]/g) || [];
+    const uniquePlaceholders = [...new Set(matchedPlaceholders)];
+    return uniquePlaceholders.map((placeholder) => placeholder.slice(1, -1));
+  }
 
-  const instructions = (
-    <div className="mt-4">
-      <h3>How to Play Mad Libs:</h3>
-      <ol>
-        <li>
-          Fill in the word fields with appropriate nouns, verbs, adjectives, and
-          adverbs.
-        </li>
-        <li>
-          Click "Generate Story" to see the fun story created with your words!
-        </li>
-        <li>
-          Not sure what words to use? Click "Fill Randomly" for a surprise.
-        </li>
-      </ol>
-    </div>
-  );
-
-  useEffect(() => {
-    localStorage.setItem("madlibsInputs", JSON.stringify(inputs));
-  }, [inputs]);
-
-  useEffect(() => {
-    localStorage.setItem("madlibsStory", story);
-  }, [story]);
+  const placeholders = extractPlaceholders(story || "");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,14 +36,11 @@ const MadLibForm = () => {
   };
 
   const handleClear = () => {
-    const clearedInputs = {};
-    placeholders.forEach((item) => (clearedInputs[item] = ""));
-    setInputs(clearedInputs);
-    setStory("");
+    setInputs({});
+    setStory("once apon a [noun1]...");
   };
 
-  const handleGenerateStory = async (e) => {
-    e.preventDefault();
+  const handleGenerateStory = async () => {
     setLoadingStory(true);
     try {
       const generatedStory = await generateStory();
@@ -77,12 +56,8 @@ const MadLibForm = () => {
   const handleRandomFill = async () => {
     setLoadingWords(true);
     try {
-      const results = await generateRandomWords();
-      const randomInputs = {};
-      for (let i = 0; i < placeholders.length; i++) {
-        randomInputs[placeholders[i]] = results[i];
-      }
-      setInputs(randomInputs);
+      const results = await generateRandomWords(placeholders);
+      setInputs(results);
       setApiError(null);
     } catch (error) {
       setApiError("Error fetching random words. Please try again.");
@@ -90,6 +65,11 @@ const MadLibForm = () => {
       setLoadingWords(false);
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("madlibsInputs", JSON.stringify(inputs));
+    localStorage.setItem("madlibsStory", story);
+  }, [inputs, story]);
 
   return (
     <Container>
@@ -177,20 +157,11 @@ const MadLibForm = () => {
             style={{ width: "100%" }}
           >
             <XCircleFill className="me-2" />
-            Reset
+            Reset Everything
           </Button>
         </Col>
       </Row>
-
-      {story ? (
-        <StoryDisplay
-          story={story}
-          inputs={inputs}
-          focusedInput={focusedInput}
-        />
-      ) : (
-        instructions
-      )}
+      <StoryDisplay story={story} inputs={inputs} focusedInput={focusedInput} />
     </Container>
   );
 };
