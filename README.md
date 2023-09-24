@@ -48,4 +48,4 @@ This project is licensed under the MIT License. See the LICENSE.md file for deta
 
 - The incredible [React community](https://reactjs.org/community/support.html) for tools and insights.
 - [Bootstrap Icons](https://icons.getbootstrap.com/) for their sleek icons.
-- All our users and testers who provided invaluable feedback.
+- All our users and testers who provided invaluable feedback..
