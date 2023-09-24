@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/mad-ai-libs/static/js/main.2c8a20df.js",
+    "main.js": "/mad-ai-libs/static/js/main.5ac01f94.js",
     "index.html": "/mad-ai-libs/index.html",
-    "main.2c8a20df.js.map": "/mad-ai-libs/static/js/main.2c8a20df.js.map"
+    "main.5ac01f94.js.map": "/mad-ai-libs/static/js/main.5ac01f94.js.map"
   },
   "entrypoints": [
-    "static/js/main.2c8a20df.js"
+    "static/js/main.5ac01f94.js"
   ]
 }
