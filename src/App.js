@@ -6,15 +6,17 @@ import AppHeader from "./AppHeader";
 
 function App() {
   return (
-    <Container className="mt-5 mb-5">
-      <Row>
-        <Col md={{ span: 8, offset: 2 }}>
-          <AppHeader />
-          <MadLibForm />
-        </Col>
-      </Row>
+    <>
+      <Container className="mt-5 mb-5">
+        <Row>
+          <Col md={{ span: 8, offset: 2 }}>
+            <AppHeader />
+            <MadLibForm />
+          </Col>
+        </Row>
+      </Container>
       <Footer />
-    </Container>
+    </>
   );
 }
 

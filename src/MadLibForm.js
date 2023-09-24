@@ -14,7 +14,7 @@ const MadLibForm = () => {
 
   const [inputs, setInputs] = useState(() => {
     const savedInputs = localStorage.getItem("madlibsInputs");
-    return savedInputs ? JSON.parse(savedInputs) : {};
+    return savedInputs ? JSON.parse(savedInputs) : { noun1: "time" };
   });
   const [storyLength, setStoryLength] = useState(() => {
     const savedValue = localStorage.getItem("madlibsStoryLength");
@@ -39,7 +39,7 @@ const MadLibForm = () => {
   };
 
   const handleClear = () => {
-    setInputs({});
+    setInputs({ noun1: "time" });
     setStory("once apon a [noun1]...");
     setStoryLength(80);
   };
@@ -78,7 +78,6 @@ const MadLibForm = () => {
 
   return (
     <Container className="mt-4">
-      {/* Display API errors */}
       {apiError && (
         <Alert
           variant="danger"
@@ -90,7 +89,6 @@ const MadLibForm = () => {
         </Alert>
       )}
 
-      {/* Input Groups */}
       {["noun", "verb", "adjective", "adverb"].map((type) => {
         const placeholdersOfType = placeholders.filter((placeholder) =>
           placeholder.startsWith(type)
@@ -121,19 +119,24 @@ const MadLibForm = () => {
         );
       })}
 
-      <div className="mb-4 d-flex align-items-center">
-        <label className="me-2">Story Length: {storyLength} words</label>
-        <input
-          type="range"
-          min="10"
-          max="150"
-          value={storyLength}
-          onChange={(e) => {
-            setStoryLength(e.target.value);
-          }}
-          style={{ flex: 1 }}
-        />
+      <div className="mb-4 p-3 rounded shadow-sm bg-light">
+        <div className="d-flex align-items-center mb-2">
+          <label className="me-2 flex-shrink-0">Story Length:</label>
+          <input
+            type="range"
+            className="form-range mx-3"
+            min="10"
+            max="160"
+            value={storyLength}
+            onChange={(e) => {
+              setStoryLength(e.target.value);
+            }}
+            style={{ flex: 1 }}
+          />
+        </div>
+        <div className="text-center font-weight-bold">~{storyLength} words</div>
       </div>
+
       <div className="d-flex justify-content-center gy-3">
         <Button
           variant="primary"

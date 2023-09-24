@@ -25,7 +25,7 @@ export const generateStory = async (storyLength) => {
   const response = await openaiAPI.post("", {
     model: "gpt-3.5-turbo",
     messages: prompts,
-    max_tokens: 300,
+    max_tokens: 500,
   });
   return response.data.choices[0].message.content;
 };
@@ -55,7 +55,7 @@ export const generateRandomWords = async (placeholders) => {
     const response = await openaiAPI.post("", {
       model: "gpt-3.5-turbo",
       messages: prompts,
-      max_tokens: 50,
+      max_tokens: 150,
     });
 
     lastResponseToRandomWords = response.data.choices[0].message.content;

@@ -19,7 +19,7 @@ const InputField = ({ name, onChange, value, onFocus, onBlur }) => {
       </Form.Label>
       <Form.Control
         type="text"
-        placeholder={`Enter a ${displayName}`}
+        placeholder={`Enter a ${wordType}`}
         name={name}
         onChange={onChange}
         value={value}

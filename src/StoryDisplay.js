@@ -6,6 +6,8 @@ const StoryDisplay = ({ story, inputs, focusedInput }) => {
     const key = placeholder.slice(1, -1);
     const styles = getPlaceholderStyle(key);
 
+    const displayNameParts = key.split(/(?=[0-9])/);
+
     return (
       <span
         style={{
@@ -39,7 +41,7 @@ const StoryDisplay = ({ story, inputs, focusedInput }) => {
             bottom: "-2.6em",
           }}
         >
-          {key}
+          {displayNameParts[0]}&nbsp;{displayNameParts[1]}
         </div>
       </span>
     );

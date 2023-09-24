@@ -43,7 +43,6 @@ const Footer = () => {
               Contact Me
             </h6>
             <p style={{ fontSize: "0.9em" }}>
-              <strong>Email:</strong>{" "}
               <a href="mailto:simon@bestdev.co.il">simon@bestdev.co.il</a>
             </p>
           </Col>
