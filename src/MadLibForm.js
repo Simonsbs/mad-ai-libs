@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Row, Col, Container, Form } from "react-bootstrap";
+import { Button, Row, Col, Container, Form, Alert } from "react-bootstrap";
 import { XCircleFill, Shuffle, LightningFill } from "react-bootstrap-icons";
 import InputField from "./InputField";
 import StoryDisplay from "./StoryDisplay";
@@ -18,6 +18,7 @@ const MadLibForm = () => {
   const [loadingStory, setLoadingStory] = useState(false);
   const [loadingWords, setLoadingWords] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);
+  const [apiError, setApiError] = useState(null);
 
   const placeholders = ["noun", "verb", "adjective", "adverb"];
 
@@ -65,6 +66,9 @@ const MadLibForm = () => {
     try {
       const generatedStory = await generateStory();
       setStory(generatedStory);
+      setApiError(null);
+    } catch (error) {
+      setApiError("Error generating story. Please try again.");
     } finally {
       setLoadingStory(false);
     }
@@ -79,13 +83,26 @@ const MadLibForm = () => {
         randomInputs[placeholders[i]] = results[i];
       }
       setInputs(randomInputs);
+      setApiError(null);
+    } catch (error) {
+      setApiError("Error fetching random words. Please try again.");
     } finally {
-      setLoadingWords(false); // End loading
+      setLoadingWords(false);
     }
   };
 
   return (
     <Container>
+      {apiError && (
+        <Alert
+          variant="danger"
+          className="mt-3"
+          onClose={() => setApiError(null)}
+          dismissible
+        >
+          {apiError}
+        </Alert>
+      )}
       <Form>
         <Row className="gy-3">
           {placeholders.map((placeholder, index) => (
