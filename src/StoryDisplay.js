@@ -22,6 +22,7 @@ const StoryDisplay = ({ story, inputs }) => {
             minWidth: "80px",
             lineHeight: "100%",
             textAlign: "center",
+            fontWeight: "bold",
           }}
         >
           {inputs[key] ? inputs[key] : ""}
@@ -56,7 +57,7 @@ const StoryDisplay = ({ story, inputs }) => {
     <Card className="mt-4">
       <Card.Header className="text-center">Your Story</Card.Header>
       <Card.Body>
-        <Card.Text style={{ lineHeight: "280%" }}>{parseStory()}</Card.Text>
+        <div style={{ lineHeight: "280%" }}>{parseStory()}</div>
       </Card.Body>
     </Card>
   );
