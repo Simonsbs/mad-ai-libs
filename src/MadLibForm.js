@@ -132,6 +132,10 @@ const MadLibForm = () => {
     if (inputsParam) {
       setInputs(JSON.parse(decodeURIComponent(inputsParam)));
     }
+
+    // Remove the URL parameters without reloading the page
+    const cleanURL = window.location.href.split("?")[0];
+    window.history.replaceState({}, "", cleanURL);
   }, []);
 
   useEffect(() => {
