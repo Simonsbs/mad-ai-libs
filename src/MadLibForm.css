@@ -38,3 +38,20 @@
     flex-direction: row;
   }
 }
+
+.icon-left-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 15px; /* Adjust based on your design preference */
+  padding-right: 15px;
+}
+
+.icon-left-button .btn-icon {
+  flex-shrink: 0; /* Prevents the icon from shrinking */
+}
+
+.icon-left-button .btn-text {
+  flex-grow: 1; /* Allows the text to take up the maximum available space */
+  text-align: center;
+}

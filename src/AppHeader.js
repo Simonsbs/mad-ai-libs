@@ -18,7 +18,9 @@ const AppHeader = () => {
         border: "1px solid darkgrey",
       }}
     >
-      <h1 style={{ fontSize: "3rem", fontWeight: "bold" }}>Mad-AI-Libs Fun</h1>
+      <h1 style={{ fontSize: "3rem", fontWeight: "bold" }}>
+        Mad-A.I.-Libs Fun
+      </h1>
       <p style={{ fontSize: "1.25rem", color: "#555" }}>
         The classic MadLibs game with a modern AI twist!
       </p>

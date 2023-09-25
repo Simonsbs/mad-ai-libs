@@ -72,3 +72,40 @@ export const generateRandomWords = async (placeholders) => {
     return {};
   }
 };
+
+export const generateContextualWords = async (placeholders, story) => {
+  try {
+    const placeholdersFormat = placeholders.join("|");
+    const prompt = [
+      {
+        role: "system",
+        content:
+          "Given the provided story context with placeholders, your task is to generate contextually appropriate words for each placeholder. Make sure the words align with the story narrative.Respond with only the required format, no extra detail or response needed. Make sure to replace each word in the format with a suitable random single word. Do not return the values as passed, no numbers or punctuation, return a single response, dont return the story.",
+      },
+      {
+        role: "user",
+        content: `Story: ${story}. Generate words for the placeholders in the following format exactly: ${placeholdersFormat}`,
+      },
+    ];
+
+    const response = await openaiAPI.post("", {
+      model: "gpt-3.5-turbo",
+      messages: prompt,
+      max_tokens: 300,
+    });
+
+    // Extract words from the AI's response.
+    const wordsResponse = response.data.choices[0].message.content.split("|");
+    const result = {};
+
+    // Map the words to their respective placeholders.
+    for (let i = 0; i < placeholders.length; i++) {
+      result[placeholders[i]] = wordsResponse[i].trim();
+    }
+
+    return result;
+  } catch (error) {
+    console.error(`Error generating contextually appropriate words:`, error);
+    return {};
+  }
+};
