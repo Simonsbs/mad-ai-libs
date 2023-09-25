@@ -9,7 +9,14 @@ import {
 
 const AppHeader = () => {
   return (
-    <Container className="text-center mb-4">
+    <Container
+      className="text-center mb-4"
+      style={{
+        backgroundColor: "#e5e5e5",
+        padding: "20px",
+        borderRadius: "12px",
+      }}
+    >
       <h1>Mad-AI-Libs Fun</h1>
       <p>
         Welcome to <strong>Mad-AI-Libs Fun</strong>, a modern twist on the

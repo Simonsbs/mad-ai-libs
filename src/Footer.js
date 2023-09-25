@@ -13,6 +13,7 @@ const Footer = () => {
         backgroundColor: "#f9f9f9",
       }}
       className="mt-5"
+      role="contentinfo"
     >
       <Container>
         <Row className="mb-4">
@@ -31,7 +32,10 @@ const Footer = () => {
               style={{ listStyleType: "none", padding: 0, fontSize: "0.9em" }}
             >
               <li>
-                <a href="https://bestdev.co.il" style={{ color: "#333" }}>
+                <a
+                  href="https://bestdev.co.il"
+                  style={{ color: "#333", textDecoration: "underline" }}
+                >
                   BestDev.co.il
                 </a>
               </li>

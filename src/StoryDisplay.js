@@ -15,8 +15,8 @@ const StoryDisplay = ({ story, inputs, focusedInput }) => {
           display: "inline-block",
           position: "relative",
           bottom: "-0.1em",
-          marginLeft: "2px",
-          marginRight: "2px",
+          marginLeft: "5px",
+          marginRight: "5px",
         }}
         key={key}
       >
