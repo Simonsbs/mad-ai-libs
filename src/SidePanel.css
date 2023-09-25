@@ -7,9 +7,10 @@
 
   transition: width 0.5s ease-in-out;
   padding-top: 60px;
-  background-color: #efefef;
+  background-color: #fff;
+  border-left: 3px solid #007bff;
   box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.3);
-  z-index: 2; /* Stay on top */
+  z-index: 2;
 }
 
 .side-panel-open {
@@ -23,15 +24,16 @@
 .side-panel-toggle {
   position: absolute;
   top: 25px;
-  left: -95px;
-  background-color: #efefef;
-  border: none;
+  left: -50px;
+  background-color: #fff;
+  border: 3px solid #007bff;
+  border-right: 0px;
   outline: none;
   cursor: pointer;
   transition: 0.5s;
-  border-radius: 5px;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.3);
-  width: 100px;
+  border-radius: 30px 0 0 30px;
+
+  width: 50px;
   height: 40px;
 }
 

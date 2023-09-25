@@ -12,17 +12,7 @@ const SidePanel = ({ children }) => {
           className="side-panel-toggle"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? (
-            <>
-              <XCircle className="me-1" />
-              Close
-            </>
-          ) : (
-            <span>
-              <List className="me-1" />
-              Options
-            </span>
-          )}
+          {isOpen ? <XCircle className="me-1" /> : <List className="me-1" />}
         </button>
         <div className="side-panel-content">{children}</div>
       </div>

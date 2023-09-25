@@ -189,6 +189,7 @@ const MadLibForm = () => {
       })}
 
       <SidePanel>
+        <h6 className="text-muted">Settings</h6>
         <OverlayTrigger
           placement="top"
           overlay={
@@ -217,6 +218,7 @@ const MadLibForm = () => {
             </div>
           </div>
         </OverlayTrigger>
+        <h6 className="text-muted mt-4">Actions</h6>
 
         <div className="d-flex justify-content-center gy-3 mb-3">
           <Row className="w-100 gy-2 justify-content-center">
