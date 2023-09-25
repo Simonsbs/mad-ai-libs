@@ -29,14 +29,18 @@ import HowToUse from "./HowToUse";
 import SidePanel from "./SidePanel";
 
 const MadLibForm = () => {
+  const defaultStory =
+    "once apon a [noun1]... a new user visited a site and clicked the 'Generate Story' button in the options tab and generated a brand new story and filled in all the missing words";
+  const defaultInputs = { noun1: "time" };
+
   const [story, setStory] = useState(() => {
     const savedStory = localStorage.getItem("madlibsStory");
-    return savedStory || "once apon a [noun1]...";
+    return savedStory || defaultStory;
   });
 
   const [inputs, setInputs] = useState(() => {
     const savedInputs = localStorage.getItem("madlibsInputs");
-    return savedInputs ? JSON.parse(savedInputs) : { noun1: "time" };
+    return savedInputs ? JSON.parse(savedInputs) : defaultInputs;
   });
   const [storyLength, setStoryLength] = useState(() => {
     const savedValue = localStorage.getItem("madlibsStoryLength");
@@ -83,8 +87,8 @@ const MadLibForm = () => {
   };
 
   const handleClear = () => {
-    setInputs({ noun1: "time" });
-    setStory("once apon a [noun1]...");
+    setInputs(defaultInputs);
+    setStory(defaultStory);
     setStoryLength(80);
     setFeedback("All reset");
   };
