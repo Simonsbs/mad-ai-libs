@@ -22,6 +22,7 @@ import { generateRandomWords, generateStory } from "./utils/api";
 import OnboardingModal from "./OnboardingModal";
 import { CSSTransition } from "react-transition-group";
 import "./MadLibForm.css";
+import FAQsAndHelp from "./FAQsAndHelp";
 
 const MadLibForm = () => {
   const [story, setStory] = useState(() => {
@@ -282,6 +283,9 @@ const MadLibForm = () => {
       </div>
 
       <StoryDisplay story={story} inputs={inputs} focusedInput={focusedInput} />
+
+      <FAQsAndHelp />
+
       <Toast
         onClose={() => setFeedback(null)}
         show={feedback !== null}
