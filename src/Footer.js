@@ -10,7 +10,8 @@ const Footer = () => {
       style={{
         borderTop: "1px solid #e5e5e5",
         padding: "30px 0",
-        backgroundColor: "#f9f9f9",
+        background: "linear-gradient(45deg, #f3f4f6, #e5e5e5)",
+        marginTop: "50px",
       }}
       className="mt-5"
       role="contentinfo"

@@ -28,3 +28,13 @@
 .spinning {
   animation: spin 1s linear infinite;
 }
+
+.d-flex.justify-content-center.gy-3.mb-3 {
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .d-flex.justify-content-center.gy-3.mb-3 {
+    flex-direction: row;
+  }
+}

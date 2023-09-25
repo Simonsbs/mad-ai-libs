@@ -8,6 +8,7 @@ import {
   OverlayTrigger,
   Tooltip,
   Toast,
+  Col,
 } from "react-bootstrap";
 import {
   XCircleFill,
@@ -15,6 +16,7 @@ import {
   LightningFill,
   InfoCircle,
   Robot,
+  Share,
 } from "react-bootstrap-icons";
 import InputField from "./InputField";
 import StoryDisplay from "./StoryDisplay";
@@ -23,6 +25,7 @@ import OnboardingModal from "./OnboardingModal";
 import { CSSTransition } from "react-transition-group";
 import "./MadLibForm.css";
 import FAQsAndHelp from "./FAQsAndHelp";
+import HowToUse from "./HowToUse";
 
 const MadLibForm = () => {
   const [story, setStory] = useState(() => {
@@ -118,9 +121,6 @@ const MadLibForm = () => {
     const storyParam = urlParams.get("story");
     const inputsParam = urlParams.get("inputs");
 
-    console.log(storyParam);
-    console.log(inputsParam);
-
     if (storyParam) {
       setStory(decodeURIComponent(storyParam));
     }
@@ -153,29 +153,7 @@ const MadLibForm = () => {
         </Alert>
       )}
 
-      <Alert variant="info" className="mb-4">
-        <h5>
-          <InfoCircle className="me-2" /> How to use:
-        </h5>
-        <ul>
-          <li>Fill in the words according to their type (e.g., noun, verb).</li>
-          <li>
-            Use the <strong>Story Length</strong> slider to determine the length
-            of your story.
-          </li>
-          <li>
-            Click <strong>Generate Story</strong> to craft your unique tale.
-          </li>
-          <li>
-            If you're unsure about the words, click{" "}
-            <strong>Fill Randomly</strong> to have them auto-filled for you.
-          </li>
-          <li>
-            Use the <strong>Reset Everything</strong> button to start from
-            scratch.
-          </li>
-        </ul>
-      </Alert>
+      <HowToUse />
 
       {["noun", "verb", "adjective", "adverb"].map((type, typeIndex) => {
         const placeholdersOfType = placeholders.filter((placeholder) =>
@@ -238,87 +216,114 @@ const MadLibForm = () => {
         </div>
       </OverlayTrigger>
 
-      <div className="d-flex justify-content-center gy-3">
-        <OverlayTrigger
-          placement="top"
-          overlay={<Tooltip>Generate a new story.</Tooltip>}
-        >
-          <Button
-            variant="primary"
-            className="me-2"
-            onClick={handleGenerateStory}
-            disabled={loadingStory}
-          >
-            {loadingStory ? (
-              <>
-                <Robot className="spinning" size={32} />
-                <span className="ms-2">
-                  Crafting your story... (~5 seconds)
-                </span>
-              </>
-            ) : (
-              <>
-                <LightningFill className="me-2" />
-                Generate Story
-              </>
-            )}
-          </Button>
-        </OverlayTrigger>
+      <div className="d-flex justify-content-center gy-3 mb-3">
+        <Row className="w-100 gy-2 justify-content-center">
+          <Col xs={12} sm={4} md={6}>
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Generate a new story.</Tooltip>}
+            >
+              <Button
+                variant="primary"
+                onClick={handleGenerateStory}
+                disabled={loadingStory}
+                style={{ width: "100%" }}
+              >
+                {loadingStory ? (
+                  <>
+                    <Robot className="spinning me-2" size={32} />
+                    Crafting your story
+                  </>
+                ) : (
+                  <>
+                    <LightningFill className="me-2" />
+                    Generate Story
+                  </>
+                )}
+              </Button>
+            </OverlayTrigger>
+          </Col>
 
-        <OverlayTrigger
-          placement="top"
-          overlay={
-            <Tooltip>
-              Automatically fill in the word placeholders for you.
-            </Tooltip>
-          }
-        >
-          <Button
-            variant="secondary"
-            className="me-2"
-            onClick={handleRandomFill}
-            disabled={loadingWords}
-          >
-            {loadingWords ? (
-              <>
-                <Robot className="spinning" size={32} />
-                <span className="ms-2">Fetching words... (~3 seconds)</span>
-              </>
-            ) : (
-              <>
-                <Shuffle className="me-2" />
-                Fill Randomly
-              </>
-            )}
-          </Button>
-        </OverlayTrigger>
-        <OverlayTrigger
-          placement="top"
-          overlay={<Tooltip>Clear all fields and start over.</Tooltip>}
-        >
-          <Button variant="danger" onClick={handleClear}>
-            <XCircleFill className="me-2" />
-            Reset Everything
-          </Button>
-        </OverlayTrigger>
-        <OverlayTrigger
-          placement="top"
-          overlay={<Tooltip>See the tutorial again.</Tooltip>}
-        >
-          <Button variant="info" onClick={reShowTutorial} className="ms-2">
-            <InfoCircle className="me-2" />
-            Show Tutorial
-          </Button>
-        </OverlayTrigger>
+          <Col xs={12} sm={4} md={6}>
+            <OverlayTrigger
+              placement="top"
+              overlay={
+                <Tooltip>
+                  Automatically fill in the word placeholders for you.
+                </Tooltip>
+              }
+            >
+              <Button
+                variant="secondary"
+                onClick={handleRandomFill}
+                disabled={loadingWords}
+                style={{ width: "100%" }}
+              >
+                {loadingWords ? (
+                  <>
+                    <Robot className="spinning me-2" size={32} />
+                    Fetching words
+                  </>
+                ) : (
+                  <>
+                    <Shuffle className="me-2" />
+                    Fill Randomly
+                  </>
+                )}
+              </Button>
+            </OverlayTrigger>
+          </Col>
 
-        <OverlayTrigger
-          placement="top"
-          overlay={<Tooltip>Share your story with friends and family.</Tooltip>}
-        >
-          <Button variant="warning" onClick={handleShare}>
-            Share your Story
-          </Button>
-        </OverlayTrigger>
+          <Col xs={12} sm={4} md={6}>
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Clear all fields and start over.</Tooltip>}
+            >
+              <Button
+                variant="danger"
+                onClick={handleClear}
+                style={{ width: "100%" }}
+              >
+                <XCircleFill className="me-2" />
+                Reset Everything
+              </Button>
+            </OverlayTrigger>
+          </Col>
+
+          <Col xs={12} sm={4} md={6}>
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>See the tutorial again.</Tooltip>}
+            >
+              <Button
+                variant="info"
+                onClick={reShowTutorial}
+                style={{ width: "100%" }}
+              >
+                <InfoCircle className="me-2" />
+                Show Tutorial
+              </Button>
+            </OverlayTrigger>
+          </Col>
+
+          <Col xs={12} sm={4} md={6} className="mt-2">
+            <OverlayTrigger
+              placement="top"
+              overlay={
+                <Tooltip>Share your story with friends and family.</Tooltip>
+              }
+            >
+              <Button
+                variant="warning"
+                onClick={handleShare}
+                style={{ width: "100%" }}
+              >
+                <Share className="me-2" />
+                Share your Story
+              </Button>
+            </OverlayTrigger>
+          </Col>
+        </Row>
       </div>
 
       <StoryDisplay story={story} inputs={inputs} focusedInput={focusedInput} />

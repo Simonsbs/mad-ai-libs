@@ -75,10 +75,17 @@ const StoryDisplay = ({ story, inputs, focusedInput }) => {
   };
 
   return (
-    <Card className="mt-4">
-      <Card.Header className="text-center">Your Story</Card.Header>
-      <Card.Body>
-        <div style={{ lineHeight: "280%" }}>{parseStory()}</div>
+    <Card className="mt-5">
+      <Card.Header
+        className="text-center"
+        style={{ backgroundColor: "#e2e8f0" }}
+      >
+        Your Story
+      </Card.Header>
+      <Card.Body style={{ backgroundColor: "#edf2f7" }}>
+        <div style={{ lineHeight: "280%", fontSize: "1.1em" }}>
+          {parseStory()}
+        </div>
       </Card.Body>
     </Card>
   );

@@ -12,9 +12,10 @@ const AppHeader = () => {
     <Container
       className="text-center mb-4"
       style={{
-        backgroundColor: "#e5e5e5",
-        padding: "20px",
+        background: "linear-gradient(45deg, #f3f4f6, #e5e5e5)",
+        padding: "30px",
         borderRadius: "12px",
+        boxShadow: "0 4px 8px rgba(0,0,0,0.05)",
       }}
     >
       <h1>Mad-AI-Libs Fun</h1>
