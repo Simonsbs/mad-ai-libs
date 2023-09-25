@@ -1,0 +1,55 @@
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 100%;
+
+  transition: width 0.5s ease-in-out;
+  padding-top: 60px;
+  background-color: #efefef;
+  box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.3);
+  z-index: 2; /* Stay on top */
+}
+
+.side-panel-open {
+  width: 300px;
+}
+
+.side-panel-content {
+  padding: 15px;
+}
+
+.side-panel-toggle {
+  position: absolute;
+  top: 25px;
+  left: -95px;
+  background-color: #efefef;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.5s;
+  border-radius: 5px;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.3);
+  width: 100px;
+  height: 40px;
+}
+
+.side-panel-content > div {
+  margin-bottom: 15px;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: -99;
+}
+
+.side-panel-open + .overlay {
+  display: block;
+}
