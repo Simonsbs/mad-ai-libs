@@ -53,6 +53,20 @@ const MadLibForm = () => {
     return uniquePlaceholders.map((placeholder) => placeholder.slice(1, -1));
   }
 
+  const generateShareableLink = () => {
+    const baseURL = window.location.origin;
+    const storyParam = encodeURIComponent(story);
+    const inputsParam = encodeURIComponent(JSON.stringify(inputs));
+
+    return `${baseURL}?story=${storyParam}&inputs=${inputsParam}`;
+  };
+
+  const handleShare = () => {
+    const shareableLink = generateShareableLink();
+    navigator.clipboard.writeText(shareableLink);
+    setFeedback("Link copied to clipboard!");
+  };
+
   const reShowTutorial = () => {
     setShowTutorial(true);
   };
@@ -98,6 +112,22 @@ const MadLibForm = () => {
       setLoadingWords(false);
     }
   };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const storyParam = urlParams.get("story");
+    const inputsParam = urlParams.get("inputs");
+
+    console.log(storyParam);
+    console.log(inputsParam);
+
+    if (storyParam) {
+      setStory(decodeURIComponent(storyParam));
+    }
+    if (inputsParam) {
+      setInputs(JSON.parse(decodeURIComponent(inputsParam)));
+    }
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("madlibsInputs", JSON.stringify(inputs));
@@ -278,6 +308,15 @@ const MadLibForm = () => {
           <Button variant="info" onClick={reShowTutorial} className="ms-2">
             <InfoCircle className="me-2" />
             Show Tutorial
+          </Button>
+        </OverlayTrigger>
+
+        <OverlayTrigger
+          placement="top"
+          overlay={<Tooltip>Share your story with friends and family.</Tooltip>}
+        >
+          <Button variant="warning" onClick={handleShare}>
+            Share your Story
           </Button>
         </OverlayTrigger>
       </div>
