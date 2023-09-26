@@ -2,7 +2,7 @@
   "name": "mad-ai-libs",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://bestdev.co.il/mad-ai-libs/",
+  "homepage": "https://mad-ai-libs.com",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
