@@ -18,11 +18,24 @@ async function getOpenAIKey() {
   return JSON.parse(secretData.SecretString).SecretString;
 }
 
-// Enable CORS for all methods
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  next();
+  const allowedOrigins = [
+    "https://bestdev.co.il",
+    "https://bestdev.co.il/",
+    "https://bestdev.co.il/mad-ai-libs",
+    "https://bestdev.co.il/mad-ai-libs/",
+    "https://mad-ai-libs.com",
+  ];
+
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin); // only set header for specific origins
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+  } else {
+    res.status(403).send("Access Denied");
+  }
 });
 
 app.post("/proxy/generateStory", async function (req, res) {
