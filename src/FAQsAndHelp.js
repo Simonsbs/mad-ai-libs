@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Accordion, Card } from "react-bootstrap";
+import { Accordion } from "react-bootstrap";
 
 const FAQsAndHelp = () => {
   const [activeKey, setActiveKey] = useState(null);
@@ -68,19 +68,14 @@ const FAQsAndHelp = () => {
   ];
 
   return (
-    <Card className="mt-4 shadow-sm">
-      <Card.Header>
-        <h5>FAQs & Help</h5>
-      </Card.Header>
-      <Accordion activeKey={activeKey} onSelect={(e) => setActiveKey(e)}>
-        {faqs.map((faq, index) => (
-          <Accordion.Item eventKey={index} key={index}>
-            <Accordion.Header>{faq.question}</Accordion.Header>
-            <Accordion.Body>{faq.answer}</Accordion.Body>
-          </Accordion.Item>
-        ))}
-      </Accordion>
-    </Card>
+    <Accordion activeKey={activeKey} onSelect={(e) => setActiveKey(e)}>
+      {faqs.map((faq, index) => (
+        <Accordion.Item eventKey={index} key={index}>
+          <Accordion.Header>{faq.question}</Accordion.Header>
+          <Accordion.Body>{faq.answer}</Accordion.Body>
+        </Accordion.Item>
+      ))}
+    </Accordion>
   );
 };
 export default FAQsAndHelp;

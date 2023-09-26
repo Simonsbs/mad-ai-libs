@@ -8,8 +8,6 @@ import {
   OverlayTrigger,
   Tooltip,
   Toast,
-  Col,
-  Spinner,
 } from "react-bootstrap";
 import {
   XCircleFill,
@@ -30,8 +28,6 @@ import {
 import OnboardingModal from "./OnboardingModal";
 import { CSSTransition } from "react-transition-group";
 import "./MadLibForm.css";
-import FAQsAndHelp from "./FAQsAndHelp";
-import HowToUse from "./HowToUse";
 import SidePanel from "./SidePanel";
 
 const MadLibForm = () => {
@@ -62,6 +58,40 @@ const MadLibForm = () => {
     return !localStorage.getItem("hasSeenTutorial");
   });
   const [feedback, setFeedback] = useState(null);
+
+  function getWordTypeExplanation(wordType) {
+    switch (wordType) {
+      case "noun":
+        return {
+          definition:
+            "A noun is a word that represents a person, place, thing, or idea. Examples: car, city, freedom.",
+          examples: "e.g. car, city, freedom",
+        };
+      case "verb":
+        return {
+          definition:
+            "A verb is an action word or a state of being. Examples: run, is, feel.",
+          examples: "e.g. run, is, feel",
+        };
+      case "adjective":
+        return {
+          definition:
+            "An adjective describes or modifies a noun. Examples: happy, green, large.",
+          examples: "e.g. happy, green, large",
+        };
+      case "adverb":
+        return {
+          definition:
+            "An adverb describes or modifies a verb, adjective, or another adverb. Examples: quickly, very, well.",
+          examples: "e.g. quickly, very, well",
+        };
+      default:
+        return {
+          definition: "",
+          examples: "",
+        };
+    }
+  }
 
   function extractPlaceholders(story) {
     const matchedPlaceholders = story.match(/\[[a-z]+\d+\]/g) || [];
@@ -191,8 +221,6 @@ const MadLibForm = () => {
         </Alert>
       )}
 
-      <HowToUse />
-
       {["noun", "verb", "adjective", "adverb"].map((type, typeIndex) => {
         const placeholdersOfType = placeholders.filter((placeholder) =>
           placeholder.startsWith(type)
@@ -200,11 +228,23 @@ const MadLibForm = () => {
 
         if (placeholdersOfType.length === 0) return null;
 
+        const { definition, examples } = getWordTypeExplanation(type);
+
         return (
           <CSSTransition key={type} timeout={300} classNames="fade">
             <Card className="mb-4 shadow-sm">
-              <Card.Header>
+              <Card.Header className="d-flex justify-content-between">
                 <h5>{type.charAt(0).toUpperCase() + type.slice(1)}s</h5>
+                <OverlayTrigger
+                  placement="left"
+                  overlay={
+                    <Tooltip>
+                      {definition} {examples}
+                    </Tooltip>
+                  }
+                >
+                  <InfoCircle />
+                </OverlayTrigger>
               </Card.Header>
               <Card.Body>
                 <Row className="gy-3">
@@ -340,8 +380,6 @@ const MadLibForm = () => {
       </SidePanel>
 
       <StoryDisplay story={story} inputs={inputs} focusedInput={focusedInput} />
-
-      <FAQsAndHelp />
 
       <Toast
         onClose={() => setFeedback(null)}
