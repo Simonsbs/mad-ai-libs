@@ -15,7 +15,7 @@
       "function": {
         "fncMadailibProxy": {
           "deploymentBucketName": "amplify-madailibs-dev-150336-deployment",
-          "s3Key": "amplify-builds/fncMadailibProxy-5939626c6f6c75593045-build.zip"
+          "s3Key": "amplify-builds/fncMadailibProxy-755a47346d6c4a62524d-build.zip"
         }
       },
       "api": {
