@@ -132,7 +132,7 @@ const MadLibForm = () => {
   };
 
   const handleClearInputs = () => {
-    setInputs(defaultInputs);
+    setInputs({});
     setFeedback("Inputs reset");
   };
 
