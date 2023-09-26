@@ -19,13 +19,7 @@ async function getOpenAIKey() {
 }
 
 app.use(function (req, res, next) {
-  const allowedOrigins = [
-    "https://bestdev.co.il",
-    "https://bestdev.co.il/",
-    "https://bestdev.co.il/mad-ai-libs",
-    "https://bestdev.co.il/mad-ai-libs/",
-    "https://mad-ai-libs.com",
-  ];
+  const allowedOrigins = ["https://bestdev.co.il", "https://mad-ai-libs.com"];
 
   const origin = req.headers.origin;
 
