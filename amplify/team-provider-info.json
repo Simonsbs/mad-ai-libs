@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-madailibs-dev-150336-authRole",
+      "UnauthRoleArn": "arn:aws:iam::205254036537:role/amplify-madailibs-dev-150336-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::205254036537:role/amplify-madailibs-dev-150336-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-madailibs-dev-150336-deployment",
+      "UnauthRoleName": "amplify-madailibs-dev-150336-unauthRole",
+      "StackName": "amplify-madailibs-dev-150336",
+      "StackId": "arn:aws:cloudformation:us-east-1:205254036537:stack/amplify-madailibs-dev-150336/bb6b23f0-5c64-11ee-85cd-0af67c9c16c1",
+      "AmplifyAppId": "d2yzbp6cmeau6d"
+    },
+    "categories": {
+      "function": {
+        "fncMadailibProxy": {
+          "deploymentBucketName": "amplify-madailibs-dev-150336-deployment",
+          "s3Key": "amplify-builds/fncMadailibProxy-52594552704c397a6563-build.zip"
+        }
+      },
+      "api": {
+        "apiMadailibProxy": {}
+      }
+    }
+  }
+}

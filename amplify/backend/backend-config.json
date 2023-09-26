@@ -1,0 +1,43 @@
+{
+  "api": {
+    "apiMadailibProxy": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "fncMadailibProxy"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "function": {
+    "fncMadailibProxy": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_fncMadailibProxy_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "fncMadailibProxy"
+        }
+      ]
+    },
+    "AMPLIFY_function_fncMadailibProxy_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "fncMadailibProxy"
+        }
+      ]
+    }
+  }
+}

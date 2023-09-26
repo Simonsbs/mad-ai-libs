@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/proxy": {
+      "name": "/proxy",
+      "lambdaFunction": "fncMadailibProxy",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

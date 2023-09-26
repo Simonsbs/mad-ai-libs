@@ -3,70 +3,33 @@
 import axios from "axios";
 
 const openaiAPI = axios.create({
-  baseURL: "https://api.openai.com/v1/chat/completions",
+  baseURL: "https://8h38f7e2z5.execute-api.us-east-1.amazonaws.com/dev/proxy",
   headers: {
-    Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
     "Content-Type": "application/json",
   },
 });
 
 export const generateStory = async (storyLength) => {
-  let prompts = [
-    {
-      role: "system",
-      content:
-        "This prompt is for use in a mad-lib game, the response should be a short story with the nouns, verbs, adjectives and adverds missing and replaced with placeholders that will be filled in later, only use the following place holders: [noun#], [verb#], [adjective#], [adverb#] where # represents the unique id of the placeholder",
-    },
-    {
-      role: "user",
-      content: `Generate a ${storyLength} word mad-lib story`,
-    },
-  ];
-  const response = await openaiAPI.post("", {
-    model: "gpt-3.5-turbo",
-    messages: prompts,
-    max_tokens: 500,
+  const response = await openaiAPI.post("generateStory", {
+    storyLength,
   });
-  return response.data.choices[0].message.content;
+  return response.data;
 };
 
 let lastResponseToRandomWords = "";
 
 export const generateRandomWords = async (placeholders) => {
   try {
-    const format = placeholders.join("|");
-
-    let prompts = [
-      {
-        role: "system",
-        content:
-          "This prompt is for use in a mad-lib game. Respond with only the required format, no extra detail or response needed. Make sure to replace each word in the format with a suitable random single word. Do not return the values as passed, no numbers or punctuation, return a single response.",
-      },
-      {
-        role: "user",
-        content: `generate random single words in the following format: ${format}`,
-      },
-    ];
-
-    if (lastResponseToRandomWords) {
-      prompts[1].content += `, make sure the response is different from: ${lastResponseToRandomWords}`;
-    }
-
-    const response = await openaiAPI.post("", {
-      model: "gpt-3.5-turbo",
-      messages: prompts,
-      max_tokens: 150,
+    const response = await openaiAPI.post("generateRandomWords", {
+      placeholders,
+      lastResponseToRandomWords,
     });
 
-    lastResponseToRandomWords = response.data.choices[0].message.content;
-    const words = lastResponseToRandomWords.split("|");
-    const result = {};
+    console.log(response.data);
 
-    for (let i = 0; i < placeholders.length; i++) {
-      result[placeholders[i]] = words[i];
-    }
+    lastResponseToRandomWords = Object.values(response.data);
 
-    return result;
+    return response.data;
   } catch (error) {
     console.error(`Error generating random words:`, error);
     return {};
@@ -75,35 +38,12 @@ export const generateRandomWords = async (placeholders) => {
 
 export const generateContextualWords = async (placeholders, story) => {
   try {
-    const placeholdersFormat = placeholders.join("|");
-    const prompt = [
-      {
-        role: "system",
-        content:
-          "Given the provided story context with placeholders, your task is to generate contextually appropriate words for each placeholder. Make sure the words align with the story narrative.Respond with only the required format, no extra detail or response needed. Make sure to replace each word in the format with a suitable random single word. Do not return the values as passed, no numbers or punctuation, return a single response, dont return the story.",
-      },
-      {
-        role: "user",
-        content: `Story: ${story}. Generate words for the placeholders in the following format exactly: ${placeholdersFormat}`,
-      },
-    ];
-
-    const response = await openaiAPI.post("", {
-      model: "gpt-3.5-turbo",
-      messages: prompt,
-      max_tokens: 300,
+    const response = await openaiAPI.post("generateContextualWords", {
+      placeholders,
+      story,
     });
 
-    // Extract words from the AI's response.
-    const wordsResponse = response.data.choices[0].message.content.split("|");
-    const result = {};
-
-    // Map the words to their respective placeholders.
-    for (let i = 0; i < placeholders.length; i++) {
-      result[placeholders[i]] = wordsResponse[i].trim();
-    }
-
-    return result;
+    return response.data;
   } catch (error) {
     console.error(`Error generating contextually appropriate words:`, error);
     return {};
