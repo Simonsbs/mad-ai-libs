@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/mad-ai-libs/static/css/main.98a61858.css",
-    "main.js": "/mad-ai-libs/static/js/main.c98e89d5.js",
+    "main.js": "/mad-ai-libs/static/js/main.f67f9be1.js",
     "index.html": "/mad-ai-libs/index.html",
     "main.98a61858.css.map": "/mad-ai-libs/static/css/main.98a61858.css.map",
-    "main.c98e89d5.js.map": "/mad-ai-libs/static/js/main.c98e89d5.js.map"
+    "main.f67f9be1.js.map": "/mad-ai-libs/static/js/main.f67f9be1.js.map"
   },
   "entrypoints": [
     "static/css/main.98a61858.css",
-    "static/js/main.c98e89d5.js"
+    "static/js/main.f67f9be1.js"
   ]
 }
